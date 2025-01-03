@@ -1,1 +1,1 @@
-# Curso de React - Proyectos de Udemy 1.0.4
+PERN - Administrador de Productos y REST API
