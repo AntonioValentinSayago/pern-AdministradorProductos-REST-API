@@ -6,4 +6,4 @@ const server = express();
 // Routing
 server.use('/api/products', router);
 
-export default server
+export default server 
