@@ -17,6 +17,9 @@ async function connectDB() {
 connectDB();
 const server = express();
 
+// Configuración para leer datos desde el formulario (body)
+server.use(express.json());
+
 // Routing
 server.use('/api/products', router);
 
