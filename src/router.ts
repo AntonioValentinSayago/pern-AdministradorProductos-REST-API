@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { body, param } from "express-validator"; // Check en operacione asincronas y en body en caso contrario
-import { createProducts, getProducts, getProductsById, updateProducts } from "./handlers/products";
+import { createProducts, deleteProducts, getProducts, getProductsById, updateAvailability, updateProducts } from "./handlers/products";
 import { handleInputErrors } from "./middleware";
 
 const router = Router();
@@ -27,6 +27,7 @@ router.post('/',
 
 router.put('/:id',
     // Validar datos
+    param('id').isInt().withMessage('Id is not valid'),
     body('name')
         .notEmpty().withMessage('Name is required'),
         // .run(req); Solamente en operaciones asincronas
@@ -39,12 +40,17 @@ router.put('/:id',
     updateProducts 
 )
 
-router.delete('/', (req, res) => {
-    res.json('Hello Delete')
-})
+router.patch('/:id', 
+    param('id').isInt().withMessage('Id is not valid'),
+    handleInputErrors,
+    updateAvailability,
+)
 
-router.patch('/', (req, res) => {
-    res.json('Hello Patch')
-})
+router.delete('/',
+    param('id').isInt().withMessage('Id is not valid'),
+    handleInputErrors,
+    deleteProducts,
+ )
+
 
 export default router;
