@@ -1,56 +1,54 @@
-import { Router } from "express";
-import { body, param } from "express-validator"; // Check en operacione asincronas y en body en caso contrario
-import { createProducts, deleteProducts, getProducts, getProductsById, updateAvailability, updateProducts } from "./handlers/products";
-import { handleInputErrors } from "./middleware";
+import { Router } from 'express'
+import { body, param } from 'express-validator'
+import { createProducts, deleteProducts, getProductsById, getProducts, updateAvailability, updateProducts } from './handlers/products'
+import { handleInputErrors } from './middleware'
 
-const router = Router();
+const router = Router()
 
-
+// Routing
 router.get('/', getProducts)
 router.get('/:id', 
-    param('id').isInt().withMessage('Id is not valid'),
+    param('id').isInt().withMessage('ID no válido'),
     handleInputErrors,
-    getProductsById)
+    getProductsById
+)
 
-router.post('/',
-    // Validar datos
+router.post('/', 
+    // Validación
     body('name')
-        .notEmpty().withMessage('Name is required'),
-        // .run(req); Solamente en operaciones asincronas
-    body('price', 'Price is required')
-        .notEmpty().withMessage('Price is required')
-        .isNumeric().withMessage('Value is Valid')
-        .custom(value => value > 0).withMessage('Price must be greater than 0'),
+        .notEmpty().withMessage('El nombre de Producto no puede ir vacio'),
+    body('price')
+        .isNumeric().withMessage('Valor no válido')
+        .notEmpty().withMessage('El precio de Producto no puede ir vacio')
+        .custom(value => value > 0).withMessage('Precio no válido'),
     handleInputErrors,
     createProducts
 )
 
-router.put('/:id',
-    // Validar datos
-    param('id').isInt().withMessage('Id is not valid'),
+router.put('/:id', 
+    param('id').isInt().withMessage('ID no válido'),
     body('name')
-        .notEmpty().withMessage('Name is required'),
-        // .run(req); Solamente en operaciones asincronas
-    body('price', 'Price is required')
-        .notEmpty().withMessage('Price is required')
-        .isNumeric().withMessage('Value is Valid')
-        .custom(value => value > 0).withMessage('Price must be greater than 0'),
-    body('availability').withMessage('Availability is not valid'),
+        .notEmpty().withMessage('El nombre de Producto no puede ir vacio'),
+    body('price')
+        .isNumeric().withMessage('Valor no válido')
+        .notEmpty().withMessage('El precio de Producto no puede ir vacio')
+        .custom(value => value > 0).withMessage('Precio no válido'),
+    body('availability')
+        .isBoolean().withMessage('Valor para disponibilidad no válido'),
     handleInputErrors,
-    updateProducts 
+    updateProducts
 )
 
 router.patch('/:id', 
-    param('id').isInt().withMessage('Id is not valid'),
+    param('id').isInt().withMessage('ID no válido'),
     handleInputErrors,
-    updateAvailability,
+    updateAvailability
 )
 
-router.delete('/',
-    param('id').isInt().withMessage('Id is not valid'),
+router.delete('/:id', 
+    param('id').isInt().withMessage('ID no válido'),
     handleInputErrors,
-    deleteProducts,
- )
+    deleteProducts
+)
 
-
-export default router;
+export default router
