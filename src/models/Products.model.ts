@@ -12,7 +12,7 @@ class Products extends Model {
     declare name: string;
 
     @Column({
-        type: DataType.FLOAT(10, 2),
+        type: DataType.FLOAT,
         allowNull: false
     })
     declare price: number;
