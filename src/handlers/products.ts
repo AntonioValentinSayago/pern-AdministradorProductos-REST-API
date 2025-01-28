@@ -30,7 +30,7 @@ export const getProductsById = async (req: Request, res: Response) => {
 export const createProducts = async (req: Request, res: Response) => {
     try {
         const savedProduct = await Products.create(req.body); // Crear y guardar en la base de datos
-        res.json({ message: 'Product created', data: savedProduct }); // Responder al cliente
+        res.status(201).json({ message: 'Product created', data: savedProduct }); // Responder al cliente
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: 'Internal Server Error' })
