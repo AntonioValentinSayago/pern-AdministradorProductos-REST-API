@@ -7,10 +7,10 @@ const clearDB = async () => {
         console.log('Datos eliminados correctamente')
         exit(0)
     } catch (error) {
+        console.log(error)
         exit(1)
     }
 }
-if(process.argv[2] === '--clear'){
+if(process.argv[2] === '--clear') {
     clearDB()
 }
-/* "pretest": "ts-node ./src/data --clear"*/
