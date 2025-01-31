@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --watch src --exec ts-node src/index.ts",
-    "test": "jest --detectOpenHandles"
+    "test": "jest --detectOpenHandles",
+    "test:coverage":"npm run pretest && jest --detectOpenHandles --coverage",
+    "pretest" : "ts-node ./src/data/index.ts --clear"
   },
   "keywords": [],
   "author": "",
