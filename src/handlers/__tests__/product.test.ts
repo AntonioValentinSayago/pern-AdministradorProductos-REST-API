@@ -40,10 +40,10 @@ describe('POST /api/products', () => {
 
     it('should create a new product', async () => {
         const response = await request(server).post('/api/products').send({
-            name: "Mouse - Testing",
+            name : "Mouse - Testing",
             price: 50
         })
-
+    
         expect(response.status).toEqual(201)
         expect(response.body).toHaveProperty('data')
 
@@ -73,7 +73,7 @@ describe('GET /api/products/:id', () => {
         const productId = 2000
         const response = await request(server).get(`/api/products/${productId}`)
         expect(response.status).toBe(404)
-        expect(response.body).toHaveProperty('errors')
+        expect(response.body).toHaveProperty('error')
         expect(response.body.error).toBe('Producto No Encontrado')
     })
 
@@ -96,19 +96,19 @@ describe('PUT /api/products/:id', () => {
 
     it('should check a valid ID in the URL', async () => {
         const response = await request(server)
-            .put('/api/products/not-valid-url')
-            .send({
-                name: "Monitor Curvo",
-                availability: true,
-                price: 300,
-            })
+                            .put('/api/products/not-valid-url')
+                            .send({
+                                name: "Monitor Curvo",
+                                availability: true,
+                                price : 300,
+                            })
         expect(response.status).toBe(400)
         expect(response.body).toHaveProperty('errors')
         expect(response.body.errors).toHaveLength(1)
         expect(response.body.errors[0].msg).toBe('ID no válido')
     })
 
-    it('should display validation error messages when updating a product', async () => {
+    it('should display validation error messages when updating a product', async() => {
         const response = await request(server).put('/api/products/1').send({})
 
         expect(response.status).toBe(400)
@@ -118,16 +118,16 @@ describe('PUT /api/products/:id', () => {
 
         expect(response.status).not.toBe(200)
         expect(response.body).not.toHaveProperty('data')
-    })
+    }) 
 
-    it('should validate that the price is greater than 0', async () => {
+    it('should validate that the price is greater than 0', async() => {
         const response = await request(server)
-            .put('/api/products/1')
-            .send({
-                name: "Monitor Curvo",
-                availability: true,
-                price: 0
-            })
+                                .put('/api/products/1')
+                                .send({
+                                    name: "Monitor Curvo",
+                                    availability: true,
+                                    price : 0
+                                })
 
         expect(response.status).toBe(400)
         expect(response.body).toHaveProperty('errors')
@@ -137,41 +137,41 @@ describe('PUT /api/products/:id', () => {
 
         expect(response.status).not.toBe(200)
         expect(response.body).not.toHaveProperty('data')
-    })
+    }) 
 
-    it('should return a 404 response for a non-existent product', async () => {
+    it('should return a 404 response for a non-existent product', async() => {
         const productId = 2000
         const response = await request(server)
-            .put(`/api/products/${productId}`)
-            .send({
-                name: "Monitor Curvo",
-                availability: true,
-                price: 300
-            })
+                                .put(`/api/products/${productId}`)
+                                .send({
+                                    name: "Monitor Curvo",
+                                    availability: true,
+                                    price : 300
+                                })
 
         expect(response.status).toBe(404)
-        expect(response.body.error).toBe('Product not found')
+        expect(response.body.error).toBe('Producto No Encontrado')
 
         expect(response.status).not.toBe(200)
         expect(response.body).not.toHaveProperty('data')
-    })
+    }) 
 
-    it('should update an existing product with valid data', async () => {
+    it('should update an existing product with valid data', async() => {
         const response = await request(server)
-            .put(`/api/products/1`)
-            .send({
-                name: "Monitor Curvo",
-                availability: true,
-                price: 300
-            })
+                                .put(`/api/products/1`)
+                                .send({
+                                    name: "Monitor Curvo",
+                                    availability: true,
+                                    price : 300
+                                })
 
         expect(response.status).toBe(200)
         expect(response.body).toHaveProperty('data')
 
         expect(response.status).not.toBe(400)
         expect(response.body).not.toHaveProperty('errors')
-    })
-
+    }) 
+    
 
 })
 

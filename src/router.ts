@@ -1,16 +1,27 @@
 import { Router } from 'express'
 import { body, param } from 'express-validator'
-import { createProducts, deleteProducts, getProductsById, getProducts, updateAvailability, updateProducts } from './handlers/products'
+import { createProduct, deleteProduct, getProductById, getProducts, updateAvailability, updateProduct } from './handlers/product'
 import { handleInputErrors } from './middleware'
 
 const router = Router()
+
+/**
+ * @swagger
+ * components:
+ *  shcemas:
+ *   Product:
+ *    type: object
+ *    properties:
+ *     id:
+ *      type:integer
+ */
 
 // Routing
 router.get('/', getProducts)
 router.get('/:id', 
     param('id').isInt().withMessage('ID no válido'),
     handleInputErrors,
-    getProductsById
+    getProductById
 )
 
 router.post('/', 
@@ -22,7 +33,7 @@ router.post('/',
         .notEmpty().withMessage('El precio de Producto no puede ir vacio')
         .custom(value => value > 0).withMessage('Precio no válido'),
     handleInputErrors,
-    createProducts
+    createProduct
 )
 
 router.put('/:id', 
@@ -36,7 +47,7 @@ router.put('/:id',
     body('availability')
         .isBoolean().withMessage('Valor para disponibilidad no válido'),
     handleInputErrors,
-    updateProducts
+    updateProduct
 )
 
 router.patch('/:id', 
@@ -48,7 +59,7 @@ router.patch('/:id',
 router.delete('/:id', 
     param('id').isInt().withMessage('ID no válido'),
     handleInputErrors,
-    deleteProducts
+    deleteProduct
 )
 
 export default router
