@@ -1,6 +1,7 @@
-import express from 'express' 
+import express from 'express'
 import colors from 'colors'
-import router  from './router'
+import cors, { CorsOptions } from 'cors';
+import router from './router'
 import db from './config/db'
 import swaggerUi from 'swagger-ui-express'
 import swaggerSpec from './config/swagger'
@@ -13,13 +14,25 @@ export async function connectDB() {
         // console.log( colors.blue( 'Conexión exitosa a la BD'))
     } catch (error) {
         // console.log(error)
-        console.log( colors.red.bold( 'Hubo un error al conectar a la BD') )
+        console.log(colors.red.bold('Hubo un error al conectar a la BD'))
     }
 }
 connectDB()
 
 // Instancia de express
 const server = express()
+
+// Configuración de CORS
+const corsOptions: CorsOptions = {
+    origin: function (origin, callback) {
+        if (origin === undefined || origin === process.env.FRONTEND_URL) {
+            callback(null, true)
+        }else{
+            callback(new Error('No permitido por CORS'))
+        }
+    }, // Que es lo que va a permitir el CORS enviar a la petición
+}
+server.use(cors(corsOptions))
 
 // Leer datos de formularios
 server.use(express.json())
