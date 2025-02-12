@@ -1,6 +1,7 @@
 import express from 'express'
 import colors from 'colors'
 import cors, { CorsOptions } from 'cors';
+import moragn from 'morgan'
 import router from './router'
 import db from './config/db'
 import swaggerUi from 'swagger-ui-express'
@@ -36,6 +37,9 @@ server.use(cors(corsOptions))
 
 // Leer datos de formularios
 server.use(express.json())
+
+// Configuración de Morgan
+server.use(moragn('dev'))
 
 server.use('/api/products', router)
 
