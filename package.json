@@ -26,11 +26,13 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@types/morgan": "^1.9.9",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
+    "morgan": "^1.10.0",
     "pg": "^8.11.3",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.33.0",
