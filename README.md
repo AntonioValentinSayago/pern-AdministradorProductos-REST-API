@@ -1,1 +1,1 @@
-PERN - Administrador de Productos y REST API MERN 2025 1.0.1
+PERN - Administrador de Productos y REST API MERN 2025 1.0.2
